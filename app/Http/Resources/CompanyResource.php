@@ -4,6 +4,21 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="CompanyResource",
+ *     title="Recurso de Empresa",
+ *     description="Respuesta de una empresa individual",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="nit", type="string", example="900123456-7"),
+ *     @OA\Property(property="name", type="string", example="Empresa ABC"),
+ *     @OA\Property(property="address", type="string", example="Calle 123 #45-67"),
+ *     @OA\Property(property="phone", type="string", example="3001234567"),
+ *     @OA\Property(property="status", type="string", enum={"active", "inactive"}, example="active"),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2023-01-01T12:00:00Z"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2023-01-01T12:00:00Z")
+ * )
+ */
 class CompanyResource extends JsonResource
 {
     /**

@@ -1,0 +1,367 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Companies API",
+        "description": "API para la gestión de empresas",
+        "contact": {
+            "email": "admin@example.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/companies": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Obtener lista de empresas",
+                "description": "Retorna una lista paginada de todas las empresas",
+                "operationId": "08ed2ae55723c6a9506353eab8145498",
+                "responses": {
+                    "200": {
+                        "description": "Lista de empresas obtenida con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Crear una nueva empresa",
+                "description": "Almacena una nueva empresa y retorna sus datos",
+                "operationId": "d80b2e6cabac7670e3a925121bfb870f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nit",
+                                    "name",
+                                    "address",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "nit": {
+                                        "type": "string",
+                                        "maxLength": 20,
+                                        "example": "900123456-7"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "example": "Empresa ABC"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "example": "Calle 123 #45-67"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "3001234567"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive"
+                                        ],
+                                        "example": "active"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empresa creada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            }
+        },
+        "/companies/{nit}": {
+            "get": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Obtener detalle de una empresa",
+                "description": "Retorna los datos de una empresa específica",
+                "operationId": "2638b1acbce8584446288e4deaefae11",
+                "parameters": [
+                    {
+                        "name": "nit",
+                        "in": "path",
+                        "description": "NIT de la empresa",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empresa encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Empresa no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Actualizar una empresa",
+                "description": "Actualiza los datos de una empresa específica",
+                "operationId": "e46ce0677701d8ed54c5ff3d57e7fb05",
+                "parameters": [
+                    {
+                        "name": "nit",
+                        "in": "path",
+                        "description": "NIT de la empresa a actualizar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "example": "Empresa XYZ Actualizada"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "maxLength": 200,
+                                        "example": "Av Principal #100-200"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "3109876543"
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "active",
+                                            "inactive"
+                                        ],
+                                        "example": "inactive"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Empresa actualizada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CompanyResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Empresa no encontrada"
+                    },
+                    "422": {
+                        "description": "Datos inválidos"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Eliminar una empresa",
+                "description": "Elimina una empresa específica",
+                "operationId": "9d772f00121c438934733e7bd1b8371d",
+                "parameters": [
+                    {
+                        "name": "nit",
+                        "in": "path",
+                        "description": "NIT de la empresa a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empresa eliminada con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Company deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Empresa no encontrada"
+                    }
+                }
+            }
+        },
+        "/companies/inactive": {
+            "delete": {
+                "tags": [
+                    "Companies"
+                ],
+                "summary": "Eliminar empresas inactivas",
+                "description": "Elimina todas las empresas con estado inactivo",
+                "operationId": "ba92b7bf9f82aa3e23d82d7fb28b9f6c",
+                "responses": {
+                    "200": {
+                        "description": "Empresas inactivas eliminadas con éxito",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "5 inactive companies have been deleted"
+                                        },
+                                        "count": {
+                                            "type": "integer",
+                                            "example": 5
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CompanyCollection": {
+                "title": "Colección de Empresas",
+                "description": "Respuesta con colección de empresas",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CompanyResource"
+                        }
+                    },
+                    "meta": {
+                        "properties": {
+                            "total": {
+                                "type": "integer",
+                                "example": 5
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "CompanyResource": {
+                "title": "Recurso de Empresa",
+                "description": "Respuesta de una empresa individual",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nit": {
+                        "type": "string",
+                        "example": "900123456-7"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Empresa ABC"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Calle 123 #45-67"
+                    },
+                    "phone": {
+                        "type": "string",
+                        "example": "3001234567"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "active",
+                            "inactive"
+                        ],
+                        "example": "active"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01T12:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2023-01-01T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Companies",
+            "description": "Endpoints para la gestión de empresas"
+        }
+    ]
+}
