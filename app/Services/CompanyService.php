@@ -64,7 +64,7 @@ final class CompanyService
      */
     public function createCompany(array $data): Company
     {
-        $company = $this->getCompanyByNit($data['nit']);
+        $company = $this->companyRepository->findByNit($data['nit']);
 
         if ($company) {
             throw new DuplicateCompanyException($data['nit']);
