@@ -1,0 +1,17 @@
+{
+    "plugins": [
+        "prettier-plugin-blade",
+        "prettier-plugin-tailwindcss",
+        "prettier-plugin-css-order"
+    ],
+    "overrides": [
+        {
+            "files": ["*.blade.php"],
+            "options": {
+                "parser": "blade"
+            }
+        }
+    ],
+    "singleAttributePerLine": false,
+    "tabWidth": 4
+}
